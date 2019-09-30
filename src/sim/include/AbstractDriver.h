@@ -1137,7 +1137,6 @@ namespace MFM
     {
       const char* filename =
         GetSimDirPathTemporary("JSON/%D-%D.json", epochs, (u32) m_AEPS);
-      SaveJSON(filename);
       LOG.Message("Saving JSON to: %s", filename);
       FILE* fp = fopen(filename, "w");
       FileByteSink fs(fp);
