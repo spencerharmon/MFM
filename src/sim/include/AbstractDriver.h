@@ -738,6 +738,13 @@ namespace MFM
       driver.m_autosavePerEpochs = (u32) out;
     }
 
+    static void SetSaveGridJSON(const char* arg, void* driverptr)
+    {
+      AbstractDriver& driver = *((AbstractDriver*)driverptr);
+
+      driver.m_saveGridJSON = true;
+    }
+
     static void SetPicturesPerRateFromArgs(const char* aeps, void* driverptr)
     {
       AbstractDriver& driver = *(AbstractDriver*)driverptr;
@@ -1125,6 +1132,19 @@ namespace MFM
         GetSimDirPathTemporary("autosave/%D-%D.mfs", epochs, (u32) m_AEPS);
       SaveGrid(filename);
     }
+    
+    void SaveGridJSON(u32 epochs)
+    {
+      const char* filename =
+        GetSimDirPathTemporary("JSON/%D-%D.json", epochs, (u32) m_AEPS);
+      SaveJSON(filename);
+      LOG.Message("Saving JSON to: %s", filename);
+      FILE* fp = fopen(filename, "w");
+      FileByteSink fs(fp);
+
+      //      m_externalConfig.Write(fs);
+      fs.Close();
+    }
 
     ExternalConfig<GC> & GetExternalConfig()
     {
@@ -1133,7 +1153,6 @@ namespace MFM
 
     void SaveGrid(const char* filename)
     {
-
       LOG.Message("Saving to: %s", filename);
       FILE* fp = fopen(filename, "w");
       FileByteSink fs(fp);
@@ -1227,6 +1246,10 @@ namespace MFM
       if (m_autosavePerEpochs > 0 && (epochs % m_autosavePerEpochs) == 0)
       {
         this->AutosaveGrid(epochs);
+	if (m_saveGridJSON)
+	{
+	  this->SaveGridJSON(epochs);
+	}
       }
 
       if (m_accelerateAfterEpochs > 0 && (epochs % m_accelerateAfterEpochs) == 0)
@@ -1266,6 +1289,7 @@ namespace MFM
       , m_aepsPerFrame(INITIAL_AEPS_PER_FRAME)
       , m_AEPSPerEpoch(100)
       , m_autosavePerEpochs(10)
+      , m_saveGridJSON(false)
       , m_accelerateAfterEpochs(0)
       , m_acceleration(1)
       , m_surgeAfterEpochs(0)
@@ -1398,6 +1422,9 @@ namespace MFM
 
       RegisterArgument("Autosave grid every ARG epochs (default 10; 0 for never)",
                        "-a|--autosave", &SetAutosavePerEpochsFromArgs, this, true);
+
+      RegisterArgument("Save grid state in JSON format as well as .mfs",
+                       "-j|--json", &SetSaveGridJSON, this, true);
 
       RegisterArgument("Increase the epoch length every ARG epochs",
                              "--accelerate",
@@ -1612,6 +1639,7 @@ namespace MFM
 
     s32 m_AEPSPerEpoch;
     u32 m_autosavePerEpochs;
+    bool m_saveGridJSON;
     u32 m_accelerateAfterEpochs;
     u32 m_acceleration;
     u32 m_surgeAfterEpochs;
