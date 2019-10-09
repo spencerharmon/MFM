@@ -738,7 +738,7 @@ namespace MFM
       driver.m_autosavePerEpochs = (u32) out;
     }
 
-    static void SetSaveGridJSON(const char* arg, void* driverptr)
+    static void SetSaveGridJSON(const char* arg, void* driver)
     {
       ((AbstractDriver*)driver)->m_saveGridJSON = 1;
     }
