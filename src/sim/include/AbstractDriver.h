@@ -740,9 +740,7 @@ namespace MFM
 
     static void SetSaveGridJSON(const char* arg, void* driverptr)
     {
-      AbstractDriver& driver = *((AbstractDriver*)driverptr);
-
-      driver.m_saveGridJSON = true;
+      ((AbstractDriver*)driver)->m_saveGridJSON = 1;
     }
 
     static void SetPicturesPerRateFromArgs(const char* aeps, void* driverptr)
