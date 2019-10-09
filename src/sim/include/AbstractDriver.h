@@ -1421,7 +1421,7 @@ namespace MFM
                        "-a|--autosave", &SetAutosavePerEpochsFromArgs, this, true);
 
       RegisterArgument("Save grid state in JSON format as well as .mfs",
-                       "-j|--json", &SetSaveGridJSON, this, true);
+                       "-j|--json", &SetSaveGridJSON, this, false);
 
       RegisterArgument("Increase the epoch length every ARG epochs",
                              "--accelerate",
