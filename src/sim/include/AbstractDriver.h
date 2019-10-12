@@ -1438,6 +1438,9 @@ namespace MFM
       RegisterArgument("Each epoch, write grid AEPS image to per-sim eps/ directory",
                        "--gridImages", &SetGridImages, this, false);
 
+      RegisterArgument("test in AbstractDriver.h",
+                       "--test2", &SetGridImages, this, false);
+
       RegisterArgument("Each epoch, write tile AEPS image to per-sim teps/ directory",
                        "--tileImages", &SetTileImages, this, false);
 

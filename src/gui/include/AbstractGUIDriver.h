@@ -1112,6 +1112,9 @@ namespace MFM
 
       this->RegisterArgument("Provide no GUI at all (batch mode).",
                              "--no-gui", &ConfigBatchMode, this, false);
+      
+      this->RegisterArgument("test in AbstractGUIDriver.h",
+                             "--test", &ConfigBatchMode, this, false);
 
       this->RegisterArgument("Start with only the statistics view on the screen.",
                              "--startwithoutgrid", &ConfigStatsOnlyView, this, false);
