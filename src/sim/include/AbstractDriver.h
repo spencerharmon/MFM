@@ -1483,6 +1483,7 @@ namespace MFM
       RegisterArgument("Command line comment, logged but otherwise ignored (string)",
                        "-#|--comment", &IgnoreComment, this, true);
 
+      RegisterArgumentSection("Test Argument Section");
     }
 
 
